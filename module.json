@@ -1,0 +1,35 @@
+{
+  "title": "Webp Uploader Converter",
+  "description": "Mass image upload (from zip file) and auto conversion to webp",
+  "version": "0.0.1-alpha1",
+  "authors": [
+    {
+      "name": "Prolice",
+      "discord": ".Prolice",
+      "flags": {}
+    }
+  ],
+  "styles": [],
+  "scripts": [
+    "webp-converter.js"
+  ],
+  "languages": [],
+  "flags": {
+    "allowBugReporter": true
+  },
+  "bugs": "https://github.com/prolice/image-uploader-converter/issues",
+  "url": "https://github.com/prolice/image-uploader-converter",
+  "readme": "https://github.com/prolice/image-uploader-converter/blob/main/README.md",
+  "changelog": "https://github.com/prolice/image-uploader-converter/blob/main/changlog.md",
+  "manifest": "https://raw.githubusercontent.com/prolice/image-uploader-converter/main/module.json",
+  "download": "https://github.com/prolice/image-uploader-converter/releases/download/v0.0.1-alpha1/module.zip",
+  "id": "webp-converter",
+  "relationships": {
+    "systems": []
+  },
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.315",
+	"maximum": "11"
+  }
+}
