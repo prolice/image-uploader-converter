@@ -3,25 +3,43 @@
     <div>
       <input type="file" name="data" accept=".zip" />
     </div>
-    
-    <div>
-      <button class="dialog-button" data-button="load">
-        <i class="fas fa-check"></i>
-        {{localize "SWFFG.LoadFile"}}
-      </button>
-    </div>
   </div>
-  <div>
-    <div style="display: flex;">
-      <div style="white-space: nowrap;">
-        <input type="checkbox" id="importImages" name="imports" value="/" data-name="Image" data-type="Image" data-itemtype="" disabled />
-        <label for="importImages">Images</label><br />
+  <div style="display: flex;">
+      <div  style="white-space: nowrap;">
+        <input  type="checkbox" id="importWebpImages" name="imports" value="/" data-name="WebpImage" data-type="webp" data-itemtype="" />
+        <label  for="importWebpImages">*.webp</label><br />
       </div>
-      <div class="import-progress Images import-hidden">
+      <div class="import-progress WebpImage import-hidden">
         <div class="import-progress-bar" style="width: 0%; color: white;"></div>
       </div>
-    </div>
+  </div> 
+  <div style="display: flex;">
+      <div  style="white-space: nowrap;">
+        <input  type="checkbox" id="importPngImages" name="imports" value="/" data-name="PngImage" data-type="png" data-itemtype="" />
+        <label  for="importPngImages">*.png</label><br />
+      </div>
+      <div class="import-progress PngImage import-hidden">
+        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      </div>
   </div>
+  <div style="display: flex;">
+      <div  style="white-space: nowrap;">
+        <input  type="checkbox" id="importJpgImages" name="imports" value="/" data-name="JpgImage" data-type="jpg" data-itemtype="" />
+        <label  for="importJpgImages">*.jpg</label><br />
+      </div>
+      <div class="import-progress JpgImage import-hidden">
+        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      </div>
+  </div>  
+  <div style="display: flex;">
+      <div  style="white-space: nowrap;">
+        <input  type="checkbox" id="importGifImages" name="imports" value="/" data-name="GifImage" data-type="gif" data-itemtype="" />
+        <label  for="importGifImages">*.gif</label><br />
+      </div>
+      <div class="import-progress GifImage import-hidden">
+        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      </div>
+  </div> 
   <div>
    <div>
     <button class="dialog-button" data-button="import">

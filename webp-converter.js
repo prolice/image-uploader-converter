@@ -1,6 +1,6 @@
 //"use strict";
 //import DataImporter from "importer/data-importer.js";
-class swSilouhetteModule {
+class WebpConverterModule {
 
     constructor() {
         this.WebpConverterModule = new Map();
@@ -34,7 +34,7 @@ class swSilouhetteModule {
             label: "Import Images", // The text label used in the button
             hint: "Import images from a zip file into your world (auto conversion in webp)",
             icon: "fas fa-upload", // A Font Awesome icon used in the submenu button
-            type: DataImporter, // A FormApplication subclass
+            type: DataImporterWebpConverter, // A FormApplication subclass
             restricted: true // Restrict this submenu to gamemaster only?
         });
 
@@ -90,7 +90,7 @@ Hooks.on("renderSettingsConfig", (app, html, data) => {
     // Insert the buttons after the file input
     browseBtn.clone(true).insertAfter(fileInput);
     createDirBtn.clone(true).insertAfter(fileInput);
-}
+});
 
 
 asyncForEach = async(array, callback) => {
@@ -121,11 +121,17 @@ async function importImage(path, zip, serverPath) {
             CONFIG.temporary.images.push(imagePath);
 
             const img = await getImageFromZip(zip, path);
-            const type = getImageType(img);
+            const type = await getImageType(img);
 
             const file = createFileFromImage(img, filename, type);
-
-            const imageWebp = await convertToWebp(file);
+            
+            var imageWebp;
+            if (type !== "image/webp"){
+                imageWebp = await convertToWebp(file);
+            }
+            else {
+                imageWebp = file;
+            }
 
             await uploadImageToServer(imageWebp, serverPath);
 
@@ -330,6 +336,9 @@ async function getMimeType(header) {
     case "ffd8ffe8":
         type = "image/jpeg";
         break;
+    case "52494646":
+        type = "image/webp";
+        break;
     default:
         type = "unknown"; // Or you can use the blob.type as fallback
     }
@@ -337,11 +346,11 @@ async function getMimeType(header) {
     return type;
 }
 
-class DataImporter extends FormApplication {
+class DataImporterWebpConverter extends FormApplication {
     /** @override */
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            id: "data-importer",
+            id: "data-importer-webp-converter",
             classes: ["starwarsffg", "data-import"],
             title: "Data Importer",
             template: "modules/webp-converter/template/data-importer.html",
@@ -455,11 +464,11 @@ class DataImporter extends FormApplication {
         const action = a.dataset.button;
 
         // if clicking load file reset default
-        $("input[type='checkbox'][name='imports']").attr("disabled", true);
-        $("input[type='checkbox'][name='creation']").attr("disabled", true);
+        //$("input[type='checkbox'][name='imports']").attr("disabled", true);
+        //$("input[type='checkbox'][name='creation']").attr("disabled", true);
 
         // load the requested file
-        if (action === "load") {
+        /*if (action === "load") {
             try {
                 const selectedFile = $("#import-file").val();
 
@@ -483,16 +492,16 @@ class DataImporter extends FormApplication {
                     }
                 }
 
-                /*this._enableImportSelection(zip.files, "VehicleSilhouettes", true);
+                this._enableImportSelection(zip.files, "VehicleSilhouettes", true);
                 this._enableImportSelection(zip.files, "VehicleImages", true);
                 $("input[type='checkbox'][name='creation'][id='creationShipAttachmentItems']").attr("disabled", false);
-                $("input[type='checkbox'][name='creation'][id='affectShipAttachmentItems']").attr("disabled", false);*/
+                $("input[type='checkbox'][name='creation'][id='affectShipAttachmentItems']").attr("disabled", false);
 
             } catch (err) {
                 ui.notifications.warn("There was an error trying to load the import file, check the console log for more information.");
                 console.error(err);
             }
-        }
+        }*/
          if (action === "import") {
             this.migrateImagesAndAttachments();
         }
@@ -537,16 +546,9 @@ class DataImporter extends FormApplication {
     async processImportFiles(importFiles, zip) {
         for (const file of importFiles) {
             // Process Vehicle Images
-            if (file.file.includes('/VehicleImages')) {
-                this.processVehicleImages(file, zip);
+            if (file.file.includes('/')) {
+                this.processImages(file, zip);
             }
-            // Process Vehicle Silhouettes
-            else if (file.file.includes('/VehicleSilhouettes')) {
-                return this.processVehicleSilhouettes(file, zip);
-            }
-
-            // Show the first step after processing each file
-            //$("div[id='first-step'][name='firststep']").attr("style", "display: flex;justify-content: flex-end; visibility: visible;");
         }
     }
 
@@ -555,21 +557,10 @@ class DataImporter extends FormApplication {
      * @param {Object} file - The file metadata.
      * @param {JSZip} zip - The JSZip object representing the ZIP file.
      */
-    async processVehicleImages(file, zip) {
-        const files = this.getFilteredFiles(zip, "/VehicleImages/", "png");
-        const serverPath = game.settings.get('webp-converter', 'vehicleImageFolder');
-        return await this.processFiles(files, zip, serverPath, "Vehicle Image", 'vehicleImagesCount', 'vehicleImage');
-    }
-
-    /**
-     * Processes Vehicle Silhouettes from the specified file and ZIP.
-     * @param {Object} file - The file metadata.
-     * @param {JSZip} zip - The JSZip object representing the ZIP file.
-     */
-    async processVehicleSilhouettes(file, zip) {
-        const files = this.getFilteredFiles(zip, "/VehicleSilhouettes/", "png");
-        const serverPath = game.settings.get('webp-converter', 'vehicleSilhouetteImageFolder');
-        return await this.processFiles(files, zip, serverPath, "Vehicle Silhouette Image", 'vehicleImagesSilhouetteCount', 'VehicleSilhouettes');
+    async processImages(file, zip) {
+        const files = this.getFilteredFiles(zip, "/", file.type);
+        const serverPath = game.settings.get('webp-converter', 'ImageFolder');
+        return await this.processFiles(files, zip, serverPath, file.type, file.label);
     }
 
     /**
@@ -580,8 +571,8 @@ class DataImporter extends FormApplication {
      * @returns {Array} An array of filtered files.
      */
     getFilteredFiles(zip, path, extension) {
-        return Object.values(zip.files).filter(file =>
-            !file.dir && file.name.split(".").pop() === extension && file.name.includes(path));
+        return Object.values(zip.files).filter(
+            file => !file.dir && file.name.split(".").pop() === extension);
     }
 
     /**
@@ -591,7 +582,7 @@ class DataImporter extends FormApplication {
      * @param {string} successMessage - The success message for notifications.
      * @param {string} countSetting - The game settings key for storing the count.
      */
-    async processFiles(files, zip, serverPath, successMessage, countSetting, progressSubClassName) {
+    async processFiles(files, zip, serverPath, successMessage, progressSubClassName) {
         const totalCount = files.length;
         let currentCount = 0;
 
