@@ -10,7 +10,7 @@
     }
   ],
   "styles": [],
-  "scripts": [
+  "esmodules": [
     "webp-converter.js"
   ],
   "languages": [],

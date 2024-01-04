@@ -1,4 +1,5 @@
-<form class="{{cssClass}}" autocomplete="off">
+<form class="{{cssClass}}" autocomplete="off" style='width:500px;height:500px;'>
+  <section class="window-content">
   <div class="import-file-selector" style="display:flex;">
     <div>
       <input type="file" name="data" accept=".zip" />
@@ -39,7 +40,10 @@
       <div class="import-progress GifImage import-hidden">
         <div class="import-progress-bar" style="width: 0%; color: white;"></div>
       </div>
-  </div> 
+  </div>
+  <div>
+  <textarea readonly name="log" form="usrform" style='height:250px;'></textarea>
+  </div>
   <div>
    <div>
     <button class="dialog-button" data-button="import">
@@ -48,4 +52,5 @@
     </button>
   </div>
   </div>
+  </section>
 </form>
