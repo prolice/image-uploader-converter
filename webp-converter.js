@@ -1,11 +1,5 @@
-//"use strict";
-
-//import {JSZip} from './lib/jszip/jszip.min.js';  
 import './lib/jszip/jszip.min.js';  
-//this.JSZip = require('./lib/jszip/jszip.min.js');
-//import JSZip from 'jszip.min.js';
-//import * as JSZip from './lib/jszip/jszip.min.js';
-   //let JSZip; 
+
 class DataImporterWebpConverter extends FormApplication {
     /** @override */
     static get defaultOptions() {
@@ -230,7 +224,7 @@ class DataImporterWebpConverter extends FormApplication {
                     // Update the import progress bar
                     $(`.${progressSubClassName} .import-progress-bar`)
                     .width(`${Math.trunc((currentCount / totalCount) * 100)}%`)
-                    .html(`<span>${Math.trunc((currentCount / totalCount) * 100)}%</span>`);
+                    .html(`<div style="display: flex;height: 100%;"><span style="flex-grow: 1;padding-top: 5px;padding-left: 10px;">${Math.trunc((currentCount / totalCount) * 100)}%</span></div>`);
 
                     if (Math.trunc((currentCount / totalCount) * 100) == 100) {
                         return true;

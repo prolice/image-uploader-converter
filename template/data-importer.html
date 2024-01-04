@@ -1,56 +1,54 @@
-<form class="{{cssClass}}" autocomplete="off" style='width:500px;height:500px;'>
-  <section class="window-content">
+<form class="{{cssClass}}" autocomplete="off" style='width: 520px;height: 520px;padding-top: 10px;padding-left: 5px;overflow: hidden;'>
   <div class="import-file-selector" style="display:flex;">
     <div>
       <input type="file" name="data" accept=".zip" />
     </div>
   </div>
-  <div style="display: flex;">
-      <div  style="white-space: nowrap;">
+  <div style="display: flex;padding-top: 5px;padding-bottom: 5px;">
+      <div  style="white-space: nowrap;margin-right: 5px;width: 100px;">
         <input  type="checkbox" id="importWebpImages" name="imports" value="/" data-name="WebpImage" data-type="webp" data-itemtype="" />
         <label  for="importWebpImages">*.webp</label><br />
       </div>
-      <div class="import-progress WebpImage import-hidden">
-        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      <div class="import-progress WebpImage import-hidden" style="background: white;width: 100%;">
+        <div class="import-progress-bar" style="width: 0%;color: white;background: green;height: 100%;display: block;"></div>
       </div>
   </div> 
-  <div style="display: flex;">
-      <div  style="white-space: nowrap;">
+  <div style="display: flex;padding-top: 5px;padding-bottom: 5px;">
+      <div  style="white-space: nowrap;margin-right: 5px;width: 100px;">
         <input  type="checkbox" id="importPngImages" name="imports" value="/" data-name="PngImage" data-type="png" data-itemtype="" />
         <label  for="importPngImages">*.png</label><br />
       </div>
-      <div class="import-progress PngImage import-hidden">
-        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      <div class="import-progress PngImage import-hidden" style="background: white;width: 100%;">
+        <div class="import-progress-bar" style="width: 0%;color: white;background: green;height: 100%;display: block;"></div>
       </div>
   </div>
-  <div style="display: flex;">
-      <div  style="white-space: nowrap;">
+  <div style="display: flex;padding-top: 5px;padding-bottom: 5px;">
+      <div  style="white-space: nowrap;margin-right: 5px;width: 100px;">
         <input  type="checkbox" id="importJpgImages" name="imports" value="/" data-name="JpgImage" data-type="jpg" data-itemtype="" />
         <label  for="importJpgImages">*.jpg</label><br />
       </div>
-      <div class="import-progress JpgImage import-hidden">
-        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      <div class="import-progress JpgImage import-hidden" style="background: white;width: 100%;">
+        <div class="import-progress-bar" style="width: 0%;color: white;background: green;height: 100%;display: block;"></div>
       </div>
   </div>  
-  <div style="display: flex;">
-      <div  style="white-space: nowrap;">
+  <div style="display: flex;padding-top: 5px;padding-bottom: 5px;">
+      <div  style="white-space: nowrap;margin-right: 5px;width: 100px;">
         <input  type="checkbox" id="importGifImages" name="imports" value="/" data-name="GifImage" data-type="gif" data-itemtype="" />
         <label  for="importGifImages">*.gif</label><br />
       </div>
-      <div class="import-progress GifImage import-hidden">
-        <div class="import-progress-bar" style="width: 0%; color: white;"></div>
+      <div class="import-progress GifImage import-hidden" style="background: white;width: 100%;">
+        <div class="import-progress-bar" style="width: 0%;color: white;background: green;height: 100%;display: block;"></div>
       </div>
   </div>
   <div>
-  <textarea readonly name="log" form="usrform" style='height:250px;'></textarea>
+  <textarea readonly name="log" form="usrform" style='height:220px;'></textarea>
   </div>
   <div>
    <div>
-    <button class="dialog-button" data-button="import">
+    <button class="dialog-button" data-button="import" style="background: floralwhite;">
       <i class="fas fa-file-import"></i>
-      {{localize "SWFFG.ImportFile"}}
+      Start Import ...
     </button>
   </div>
   </div>
-  </section>
 </form>
