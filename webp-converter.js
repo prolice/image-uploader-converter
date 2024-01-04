@@ -1,11 +1,5 @@
-//"use strict";
-
-//import {JSZip} from './lib/jszip/jszip.min.js';  
 import './lib/jszip/jszip.min.js';  
-//this.JSZip = require('./lib/jszip/jszip.min.js');
-//import JSZip from 'jszip.min.js';
-//import * as JSZip from './lib/jszip/jszip.min.js';
-   //let JSZip; 
+
 class DataImporterWebpConverter extends FormApplication {
     /** @override */
     static get defaultOptions() {
